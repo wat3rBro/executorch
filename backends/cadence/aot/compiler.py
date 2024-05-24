@@ -10,8 +10,10 @@ from typing import Any, Tuple
 import torch
 
 from executorch.backends.cadence.aot.passes import (
-    ReplacePT2DequantWithCadenceDequant,
-    ReplacePT2QuantWithCadenceQuant,
+    ReplacePT2DequantWithCadenceDequantPass,
+    ReplacePT2QuantWithCadenceQuantPass,
+    ReplaceScalarTensorWithFullPass,
+    ReplaceSqueezeAndUnsqueezeWithViewPass,
 )
 from executorch.exir import EdgeCompileConfig, EdgeProgramManager, to_edge
 
@@ -84,7 +86,12 @@ def export_to_cadence(
 
     # Run a couple required passes for quant/dequant ops
     cadence_program_manager = edge_program_manager.transform(
-        [ReplacePT2QuantWithCadenceQuant(), ReplacePT2DequantWithCadenceDequant()]
+        [
+            ReplaceScalarTensorWithFullPass(),
+            ReplaceSqueezeAndUnsqueezeWithViewPass(),
+            ReplacePT2QuantWithCadenceQuantPass(),
+            ReplacePT2DequantWithCadenceDequantPass(),
+        ]
     )
 
     return cadence_program_manager

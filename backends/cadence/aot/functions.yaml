@@ -17,6 +17,11 @@
     - arg_meta: null
       kernel_name: torch::executor::add_out
 
+- op: cat.out
+  kernels:
+    - arg_meta: null
+      kernel_name: torch::executor::cat_out
+
 - op: embedding.out
   kernels:
     - arg_meta: null
@@ -27,10 +32,20 @@
     - arg_meta: null
       kernel_name: torch::executor::full_out
 
+- op: mul.out
+  kernels:
+    - arg_meta: null
+      kernel_name: torch::executor::mul_out
+
 - op: permute_copy.out
   kernels:
     - arg_meta: null
       kernel_name: torch::executor::permute_copy_out
+
+- op: slice_copy.out
+  kernels:
+    - arg_meta: null
+      kernel_name: torch::executor::view_copy_out
 
 - op: view_copy.out
   kernels:
