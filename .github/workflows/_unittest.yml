@@ -31,8 +31,9 @@ jobs:
         # Setup MacOS dependencies as there is no Docker support on MacOS atm
         PYTHON_EXECUTABLE=python \
         EXECUTORCH_BUILD_PYBIND=ON \
-        CMAKE_ARGS="-DEXECUTORCH_BUILD_XNNPACK=ON -DEXECUTORCH_BUILD_KERNELS_QUANTIZED=ON" \
+        CMAKE_ARGS="-DEXECUTORCH_BUILD_XNNPACK=ON -DEXECUTORCH_BUILD_VULKAN=ON -DEXECUTORCH_BUILD_KERNELS_QUANTIZED=ON" \
         .ci/scripts/setup-linux.sh cmake
+        .ci/scripts/setup-vulkan-linux-deps.sh
 
         # Run pytest with coverage
         pytest -n auto --cov=./ --cov-report=xml
